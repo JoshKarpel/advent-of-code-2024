@@ -1,11 +1,12 @@
 const std = @import("std");
 
+const a = std.heap.page_allocator;
+
 pub fn main() !void {
     try day1();
 }
 
 fn day1() !void {
-    const a = std.heap.page_allocator;
     const t = i32;
     const input = @embedFile("inputs/day_01.txt");
 
@@ -26,7 +27,7 @@ fn day1() !void {
     }
 
     std.mem.sort(t, left.items, {}, comptime std.sort.asc(t));
-    std.mem.sort(t, right.items, {},comptime std.sort.asc(t));
+    std.mem.sort(t, right.items, {}, comptime std.sort.asc(t));
 
     var difference: u32 = 0;
     for (left.items, right.items) |l, r| {
