@@ -3,12 +3,21 @@ const std = @import("std");
 const a = std.heap.page_allocator;
 
 pub fn main() !void {
-    try day1();
+    try timed(day1);
+}
+
+fn timed(f: anytype) !void {
+    const start = std.time.nanoTimestamp();
+    try f();
+    const end = std.time.nanoTimestamp();
+    const duration: f64 = @floatFromInt(end - start);
+    std.debug.print("Execution time: {} ms\n\n", .{duration / 1e6});
 }
 
 fn day1() !void {
-    const t = i32;
     const input = @embedFile("inputs/day_01.txt");
+
+    const t = i32;
 
     var left = std.ArrayList(t).init(a);
     defer left.deinit();
@@ -17,6 +26,8 @@ fn day1() !void {
 
     var lines = std.mem.splitSequence(u8, input, "\n");
     while (lines.next()) |line| {
+        if (line.len == 0) continue; // Skip empty lines
+        //
         var parts = std.mem.splitSequence(u8, line, "   ");
 
         const l = try std.fmt.parseInt(t, parts.next().?, 10);
