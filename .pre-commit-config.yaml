@@ -26,3 +26,9 @@ repos:
       - id: zig-fmt
       - id: zig-build
       - id: zig-build-test
+
+ci:
+  skip:
+    - zig-fmt
+    - zig-build
+    - zig-build-test
